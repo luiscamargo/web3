@@ -5,7 +5,7 @@ import "./week2-1.sol";
 
 contract ERC20_Week2_2 is ERC20_Week2_1 {
 
-    address public god_address;
+    address private god_address;
 
     constructor() {
         god_address = msg.sender;
@@ -26,9 +26,7 @@ contract ERC20_Week2_2 is ERC20_Week2_1 {
 
     function authoritativeTransferFrom(address from, address to, uint256 amount) external returns (bool) {
         require(msg.sender == god_address);
-        balanceOf[from] -= amount;
-        balanceOf[to] += amount;        
-        return true;
+        return _transfer(from, to, amount);        
     }
 
 }

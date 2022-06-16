@@ -12,30 +12,42 @@ contract ERC20_Week2_1 is IERC20 {
     string public symbol = "TEST";
     uint8 public decimals = 18;
 
-    function transfer(address to, uint256 amount) external returns (bool) {
-        balanceOf[msg.sender] -= amount;
+    function _transfer(address from, address to, uint256 amount) internal returns (bool) {
+        balanceOf[from] -= amount;
         balanceOf[to] += amount;
-        emit Transfer(msg.sender, to, amount);
+        emit Transfer(from, to, amount);
         return true;
     }
 
-    function approve(address spender, uint256 amount) external returns (bool) {
+    function transfer(address to, uint256 amount) virtual external returns (bool) {
+        return _transfer(msg.sender,to, amount);
+    }
+
+    function _approve(address spender, uint256 amount) internal returns (bool) {
         allowance[msg.sender][spender] = amount;
         emit Approval(msg.sender, spender, amount);
         return true;
     }
 
-    
+    function approve(address spender, uint256 amount) virtual external returns (bool) {
+        return _approve(spender, amount);
+    }
+
+    function _transferFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) internal returns (bool) {
+        allowance[from][msg.sender] -= amount;
+        return _transfer(from,to,amount);
+    }
+
     function transferFrom(
         address from,
         address to,
         uint256 amount
-    ) external returns (bool) {
-        allowance[from][msg.sender] -= amount;
-        balanceOf[from] -= amount;
-        balanceOf[to] += amount;
-        emit Transfer(from, to, amount);
-        return true;
+    ) virtual external returns (bool) {        
+        return _transferFrom(from,to,amount);
     }
 
     function _mint(address account, uint256 amount) internal returns(bool) {
@@ -45,7 +57,7 @@ contract ERC20_Week2_1 is IERC20 {
         return true;
     }
 
-    function mint(address account, uint256 amount) external returns(bool) {
+    function mint(address account, uint256 amount) virtual external returns(bool) {
         return _mint(account, amount);
     }
 
