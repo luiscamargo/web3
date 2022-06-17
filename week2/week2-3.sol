@@ -6,7 +6,7 @@ import "./week2-1.sol";
 contract ERC20_Week2_3 is ERC20_Week2_1 {
 
     address private gov_address;
-    mapping(address => bool) public blacklist;
+    mapping(address => bool) private blacklist;
 
     constructor() {
         gov_address = msg.sender;
@@ -21,7 +21,7 @@ contract ERC20_Week2_3 is ERC20_Week2_1 {
     function removeFromBlacklist(address entry) external returns(bool) {
         require(msg.sender == gov_address);
         if (blacklist[entry])
-            blacklist[entry] = false;
+            delete blacklist[entry];
         return true;
     }
 
