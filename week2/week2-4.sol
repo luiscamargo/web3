@@ -19,15 +19,15 @@ contract ERC20_Week2_4 is ERC20_Week2_1 {
         return true;
     }
 
-    function buyTokens() external payable returns(bool) {
+    function buyTokens() external payable virtual returns(bool) {
 
-        // 1 ether buys tokensPerEther * 10e18
-        // 1 wei (1/10e18 eth) buys (tokensPerEther * 10e18)/10e18 = tokensPerEther
+        // 1 ether buys tokensPerEther * 1e18
+        // 1 wei (1/1e18 eth) buys (tokensPerEther * 1e18)/1e18 = tokensPerEther
         // msg.value is in wei
         uint256 tokensToBuy = msg.value * tokensPerEther;
 
         require(tokensToBuy > 0, "Not enough ether sent for minimum purchase");
-        require(totalSupply + tokensToBuy < 1000000 * 10 ** decimals, "Exceeds maximum supply");
+        require(totalSupply + tokensToBuy <= 1000000 * 10 ** decimals, "Exceeds maximum supply");
 
         _mint(msg.sender, tokensToBuy);
         return true;

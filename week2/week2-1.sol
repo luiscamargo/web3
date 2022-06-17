@@ -6,8 +6,8 @@ import "./IERC20.sol";
 contract ERC20_Week2_1 is IERC20 {
 
     uint256 public totalSupply;
-    mapping(address => uint) public balanceOf;
-    mapping(address => mapping(address => uint)) public allowance;
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
     string public name = "Test";
     string public symbol = "TEST";
     uint8 public decimals = 18;
@@ -38,7 +38,7 @@ contract ERC20_Week2_1 is IERC20 {
         address to,
         uint256 amount
     ) internal returns (bool) {
-        allowance[from][msg.sender] -= amount;
+        allowance[from][to] -= amount;
         return _transfer(from,to,amount);
     }
 
