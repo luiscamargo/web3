@@ -36,11 +36,13 @@ contract ERC20_Week2_5 is ERC20_Week2_1 {
 
         require(tokensToBuy > 0, "Not enough ether sent for minimum purchase");
 
+        // if there's supply left mint new tokens
         if ( totalSupply + tokensToBuy <= 1000000 * 10 ** decimals ) {
 
             _mint(msg.sender, tokensToBuy);
             return true;
         }
+        // if there's no supply left, but the contract owns enough tokens, sell the contract's tokens
         else if ( balanceOf[address(this)] <= tokensToBuy ) {
         
             _transfer(address(this), msg.sender, tokensToBuy);
