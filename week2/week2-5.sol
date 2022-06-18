@@ -27,7 +27,7 @@ contract ERC20_Week2_5 is ERC20_Week2_1 {
         return true;
     }
 
-    function buyTokens() external payable virtual returns(bool) {
+    function buyTokens() external payable virtual {
 
         // 1 ether buys tokensPerEther * 10e18
         // 1 wei (1/10e18 eth) buys (tokensPerEther * 10e18)/10e18 = tokensPerEther
@@ -40,13 +40,11 @@ contract ERC20_Week2_5 is ERC20_Week2_1 {
         if ( totalSupply + tokensToBuy <= 1000000 * 10 ** decimals ) {
 
             _mint(msg.sender, tokensToBuy);
-            return true;
         }
         // if there's no supply left, but the contract owns enough tokens, sell the contract's tokens
         else if ( balanceOf[address(this)] <= tokensToBuy ) {
         
             _transfer(address(this), msg.sender, tokensToBuy);
-            return true;
         }
         else {
 
@@ -54,7 +52,7 @@ contract ERC20_Week2_5 is ERC20_Week2_1 {
         }
     }
 
-    function sellTokens(uint256 amount) external returns(bool) {
+    function sellTokens(uint256 amount) external {
 
         require(allowance[msg.sender][address(this)] >= amount);
         require(balanceOf[msg.sender] >= amount);
@@ -71,15 +69,13 @@ contract ERC20_Week2_5 is ERC20_Week2_1 {
         payable(msg.sender).transfer(payment);
 
         _transferFrom(msg.sender, address(this), amount);
-        return true;
     }
 
 
-    function withdraw() external returns(bool) {
+    function withdraw() external {
         require(msg.sender == owner);
 
         payable(owner).transfer(address(this).balance);
-        return true;
     }
 
     function checkContractBalancer() external view returns (uint256) {

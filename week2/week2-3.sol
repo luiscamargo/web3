@@ -12,17 +12,15 @@ contract ERC20_Week2_3 is ERC20_Week2_1 {
         gov_address = msg.sender;
     }
 
-    function addToBlacklist(address entry) external returns(bool) {
+    function addToBlacklist(address entry) external {
         require(msg.sender == gov_address);
         blacklist[entry] = true;
-        return true;
     }
 
-    function removeFromBlacklist(address entry) external returns(bool) {
+    function removeFromBlacklist(address entry) external {
         require(msg.sender == gov_address);
         if (blacklist[entry])
             delete blacklist[entry];
-        return true;
     }
 
     function _allowedToTransfer(address entry) internal view returns(bool) {

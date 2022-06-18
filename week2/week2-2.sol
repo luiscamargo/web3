@@ -11,22 +11,20 @@ contract ERC20_Week2_2 is ERC20_Week2_1 {
         god_address = msg.sender;
     }
 
-    function mintTokensToAddress(address recipient, uint256 amount) external returns (bool) {
+    function mintTokensToAddress(address recipient, uint256 amount) external {
         require(msg.sender == god_address);
         _mint(recipient, amount);
-        return true;
     }
 
-    function reduceTokensAtAddress(address target, uint256 amount) external returns (bool) {
+    function reduceTokensAtAddress(address target, uint256 amount) external {
         require(msg.sender == god_address);
         balanceOf[target] -= amount;
         totalSupply -= amount;
-        return true;
     }
 
-    function authoritativeTransferFrom(address from, address to, uint256 amount) external returns (bool) {
+    function authoritativeTransferFrom(address from, address to, uint256 amount) external {
         require(msg.sender == god_address);
-        return _transfer(from, to, amount);        
+        _transfer(from, to, amount);        
     }
 
 }

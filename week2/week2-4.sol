@@ -19,7 +19,7 @@ contract ERC20_Week2_4 is ERC20_Week2_1 {
         return true;
     }
 
-    function buyTokens() external payable virtual returns(bool) {
+    function buyTokens() external payable virtual {
 
         // 1 ether buys tokensPerEther * 1e18
         // 1 wei (1/1e18 eth) buys (tokensPerEther * 1e18)/1e18 = tokensPerEther
@@ -30,12 +30,10 @@ contract ERC20_Week2_4 is ERC20_Week2_1 {
         require(totalSupply + tokensToBuy <= 1000000 * 10 ** decimals, "Exceeds maximum supply");
 
         _mint(msg.sender, tokensToBuy);
-        return true;
     }
 
-    function withdraw() external returns(bool) {
+    function withdraw() external {
         require(msg.sender == owner);
         payable(owner).transfer(address(this).balance);
-        return true;
     }
 }
