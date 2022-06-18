@@ -62,9 +62,9 @@ contract ERC20_Week2_5 is ERC20_Week2_1 {
         // amount is integer representation with 18 decimal places (1e18)
         // seller receives 0.5 ether = 5e17 wei for each 1000 tokens (1000*1e18)
         // 1000*1e18 * paymentFactor = 5e17
-        // paymentFactor = (1000*1e18)/5e17
-        // paymentFactor = 2000
-        // seller receives amount / paymentFactor in wei
+        // paymentFactor = 5e17/(1000*1e18)
+        // paymentFactor = 1/2000
+        // seller receives amount * paymentFactor in wei
         uint256 payment = amount / 2000;
 
         require(address(this).balance >= payment);
