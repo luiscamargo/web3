@@ -8,7 +8,6 @@ contract OpenZeppelinNFT is ERC721 {
 
     uint256 public tokenSupply = 0;
     uint256 public constant MAX_SUPPLY = 10;
-    uint256 public constant PRICE = 0.0001 ether;
 
     address immutable deployer;
 
@@ -16,9 +15,8 @@ contract OpenZeppelinNFT is ERC721 {
         deployer = msg.sender;
     }
 
-    function mint() external payable {
+    function mint() external {
         require(tokenSupply < MAX_SUPPLY, "supply used up");
-        require(msg.value == PRICE, "token price is 0.0001 ether");
 
         _mint(msg.sender, tokenSupply);
         tokenSupply++;
